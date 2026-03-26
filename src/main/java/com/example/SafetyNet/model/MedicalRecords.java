@@ -6,11 +6,11 @@ public class MedicalRecords {
     private String firstName;
     private String lastName;
     private String birthdate;
-    private List<String> medications;
-    private List<String> allergies;
+    private String[] medications;
+    private String[] allergies;
 
     public void MedicalRecord(){}
-    public void MedicalRecord(String firstName,String lastName,String birthdate,List<String> medications,List<String> allergies){
+    public void MedicalRecord(String firstName,String lastName,String birthdate,String[] medications,String[] allergies){
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
@@ -36,16 +36,16 @@ public class MedicalRecords {
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
-    public List<String> getMedications() {
+    public String[] getMedications() {
         return medications;
     }
-    public void setMedications(List<String> medications) {
+    public void setMedications(String[] medications) {
         this.medications = medications;
     }
-    public List<String> getAllergies() {
+    public String[] getAllergies() {
         return allergies;
     }
-    public void setAllergies(List<String> allergies) {
+    public void setAllergies(String[] allergies) {
         this.allergies = allergies;
     }
 }
