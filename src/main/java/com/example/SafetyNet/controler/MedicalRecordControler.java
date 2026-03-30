@@ -9,21 +9,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/medicalRecords")
 public class MedicalRecordControler {
 
-    @Autowired
-    MedicalRecordService MedicalRecordService;
+    //@Autowired
+    private final MedicalRecordService medicalRecordService;
 
-    @PostMapping
+    public MedicalRecordControler(MedicalRecordService medicalRecordService) {
+        this.medicalRecordService = medicalRecordService;
+    }
+
+    /*@PostMapping
     public MedicalRecords addFireStation(@RequestBody MedicalRecords medicalRecord) {
-        return MedicalRecordService.addFireStation(medicalRecord);
+        return medicalRecordService.addFireStation(medicalRecord);
     }
 
     @PutMapping
     public MedicalRecords updateFireStation(@RequestBody MedicalRecords medicalRecord) {
-        return MedicalRecordService.updateFireStation(medicalRecord);
+        return medicalRecordService.updateFireStation(medicalRecord);
     }
 
     @DeleteMapping
     public MedicalRecords deleteFireStation(@RequestBody MedicalRecords medicalRecord) {
-        return MedicalRecordService.deleteFireStation(medicalRecord);
-    }
+        return medicalRecordService.deleteFireStation(medicalRecord);
+    }*/
 }

@@ -1,6 +1,8 @@
 package com.example.SafetyNet.service;
 
+import com.example.SafetyNet.model.FireStations;
 import com.example.SafetyNet.model.MedicalRecords;
+import com.example.SafetyNet.model.Persons;
 import org.springframework.stereotype.Service;
 
 @Service
