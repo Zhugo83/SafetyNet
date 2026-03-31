@@ -1,8 +1,6 @@
 package com.example.SafetyNet.model;
 
-import java.util.List;
-
-public class MedicalRecords {
+public class MedicalRecord {
     private String firstName;
     private String lastName;
     private String birthdate;

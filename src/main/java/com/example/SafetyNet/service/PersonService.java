@@ -1,8 +1,6 @@
 package com.example.SafetyNet.service;
 
-import com.example.SafetyNet.model.FireStations;
-import com.example.SafetyNet.model.MedicalRecords;
-import com.example.SafetyNet.model.Persons;
+import com.example.SafetyNet.model.Person;
 import com.example.SafetyNet.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +16,22 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public Persons addPerson(Persons person) {
+    public Person addPerson(Person person) {
         return null;
     }
 
-    public Persons updatePerson(Persons person) {
+    public Person updatePerson(Person person) {
         return null;
     }
 
-    public Persons deletePerson(Persons person) {
+    public Person deletePerson(Person person) {
         return null;
     }
 
     public List<String> communityEmail(String city) {
         List<String> emails = new ArrayList<>();
-        List<Persons> persons = personRepository.findAllPersons();
-        for (Persons person : persons){
+        List<Person> persons = personRepository.findAllPersons();
+        for (Person person : persons){
             if (person.getCity().equals(city)){
                 emails.add(person.getEmail());
             }

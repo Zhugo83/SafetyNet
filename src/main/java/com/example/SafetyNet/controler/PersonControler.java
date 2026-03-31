@@ -1,9 +1,6 @@
 package com.example.SafetyNet.controler;
 
-import com.example.SafetyNet.model.FireStations;
-import com.example.SafetyNet.model.Persons;
 import com.example.SafetyNet.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +8,6 @@ import java.util.List;
 @RestController
 public class PersonControler {
 
-    //@Autowired
     private final PersonService personService;
 
     PersonControler(PersonService personService) {

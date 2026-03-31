@@ -1,21 +1,33 @@
 package com.example.SafetyNet.service;
 
-import com.example.SafetyNet.model.FireStations;
-import com.example.SafetyNet.model.MedicalRecords;
-import com.example.SafetyNet.model.Persons;
+import com.example.SafetyNet.model.MedicalRecord;
+import com.example.SafetyNet.repository.FireStationRepository;
+import com.example.SafetyNet.repository.MedicalRecordRepository;
+import com.example.SafetyNet.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MedicalRecordService {
-    public MedicalRecords addFireStation(MedicalRecords medicalRecord) {
+
+    private final PersonRepository personRepository;
+    private final FireStationRepository fireStationRepository;
+    private final MedicalRecordRepository medicalRecordRepository;
+
+    public MedicalRecordService(PersonRepository personRepository, FireStationRepository fireStationRepository, MedicalRecordRepository medicalRecordRepository) {
+        this.fireStationRepository = fireStationRepository;
+        this.personRepository = personRepository;
+        this.medicalRecordRepository = medicalRecordRepository;
+    }
+
+    public MedicalRecord addFireStation(MedicalRecord medicalRecord) {
         return null;
     }
 
-    public MedicalRecords updateFireStation(MedicalRecords medicalRecord) {
+    public MedicalRecord updateFireStation(MedicalRecord medicalRecord) {
         return null;
     }
 
-    public MedicalRecords deleteFireStation(MedicalRecords medicalRecord) {
+    public MedicalRecord deleteFireStation(MedicalRecord medicalRecord) {
         return null;
     }
 }

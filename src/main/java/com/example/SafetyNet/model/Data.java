@@ -3,25 +3,26 @@ package com.example.SafetyNet.model;
 import java.util.List;
 
 public class Data {
-    private List<Persons> persons;
-    private List<FireStations> fireStations;
-    private List<MedicalRecords> medicalRecords;
-    public List<Persons> getPerson() {
+    private List<Person> persons;
+    private List<FireStation> firestations;
+    private List<MedicalRecord> medicalrecords;
+
+    public List<Person> getPerson() {
         return persons;
     }
-    public void setPerson(List<Persons> person) {
+    public void setPerson(List<Person> person) {
         persons = person;
     }
-    public List<FireStations> getFireStation() {
-        return fireStations;
+    public List<FireStation> getFireStation() {
+        return firestations;
     }
-    public void setFireStation(List<FireStations> fireStation) {
-        fireStations = fireStation;
+    public void setFireStation(List<FireStation> fireStation) {
+        firestations = fireStation;
     }
-    public List<MedicalRecords> getMedicalRecord() {
-        return medicalRecords;
+    public List<MedicalRecord> getMedicalRecord() {
+        return medicalrecords;
     }
-    public void setMedicalRecord(List<MedicalRecords> medicalRecord) {
-        medicalRecords = medicalRecord;
+    public void setMedicalRecord(List<MedicalRecord> medicalRecord) {
+        medicalrecords = medicalRecord;
     }
 }

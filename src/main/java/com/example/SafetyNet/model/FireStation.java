@@ -1,11 +1,13 @@
 package com.example.SafetyNet.model;
 
-public class FireStations {
+public class FireStation {
     private String address;
     private String station;
 
-    public void FireStation(){}
-    public void FireStation(String address, String station){
+    public FireStation() {
+    }
+
+    public FireStation(String address, String station) {
         this.address = address;
         this.station = station;
     }

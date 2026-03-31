@@ -1,6 +1,6 @@
 package com.example.SafetyNet.repository;
 
-import com.example.SafetyNet.model.Persons;
+import com.example.SafetyNet.model.Person;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class PersonRepository {
         this.dataHandler = dataHandler;
     }
 
-    public List<Persons> findAllPersons() {
+    public List<Person> findAllPersons() {
         return dataHandler.getData().getPerson();
     }
 }

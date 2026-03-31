@@ -1,6 +1,6 @@
 package com.example.SafetyNet.model;
 
-public class Persons {
+public class Person {
     private String firstName;
     private String lastName;
     private String address;

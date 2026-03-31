@@ -1,15 +1,12 @@
 package com.example.SafetyNet.controler;
 
-import com.example.SafetyNet.model.MedicalRecords;
 import com.example.SafetyNet.service.MedicalRecordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/medicalRecords")
 public class MedicalRecordControler {
 
-    //@Autowired
     private final MedicalRecordService medicalRecordService;
 
     public MedicalRecordControler(MedicalRecordService medicalRecordService) {

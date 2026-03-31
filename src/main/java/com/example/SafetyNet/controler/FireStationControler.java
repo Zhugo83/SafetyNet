@@ -1,14 +1,13 @@
 package com.example.SafetyNet.controler;
-import com.example.SafetyNet.model.FireStations;
+import com.example.SafetyNet.model.FireStation;
 import com.example.SafetyNet.service.FireStationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/firestation")
 public class FireStationControler {
 
-    //@Autowired
     private final FireStationService fireStationService;
 
     public FireStationControler(FireStationService fireStationService) {
@@ -36,7 +35,7 @@ public class FireStationControler {
     }*/
 
     @GetMapping("phoneAlert")
-    public FireStations phoneAlert(@RequestParam(name = "firestation_number") String fireStation){
+    public List<String> phoneAlert(@RequestParam(name = "firestation_number") String fireStation){
         return fireStationService.phoneAlert(fireStation);
     }
 }
