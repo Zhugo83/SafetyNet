@@ -1,14 +1,20 @@
 package com.example.SafetyNet.service;
 
 import com.example.SafetyNet.model.FireStation;
+import com.example.SafetyNet.model.MedicalRecord;
 import com.example.SafetyNet.model.Person;
 import com.example.SafetyNet.repository.FireStationRepository;
 import com.example.SafetyNet.repository.MedicalRecordRepository;
 import com.example.SafetyNet.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
+
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Service
 public class FireStationService {
@@ -34,8 +40,28 @@ public class FireStationService {
         return null;
     }
 
-    public FireStation fire(String fireStation) {
-        return null;
+    public List<String> fire(String address) {
+        List<String> Info = new ArrayList<>();
+        List<Person> persons = personRepository.findAllPersons();
+        List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
+        List<FireStation> fireStations = fireStationRepository.getFireStation();
+        for (FireStation fs : fireStations) {
+            for (Person person : persons) {
+                for (MedicalRecord md : medicalRecords){
+                    if (fs.getAddress().equals(address) && fs.getAddress().equals(person.getAddress()) && person.getFirstName().equals(md.getFirstName()) && person.getLastName().equals(md.getLastName())) {
+                        LocalDate currentDate = LocalDate.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                        LocalDate birthDate = LocalDate.parse(md.getBirthdate(), formatter);
+                        Period period = Period.between(birthDate, currentDate);
+                        int age = period.getYears();
+
+                        Info.add("Fire Station: " + fs.getStation() + " " + person.getLastName() + " " + person.getPhone() + " " + age + " Medications: " + Arrays.toString(md.getMedications()) + " Allergies: " + Arrays.toString(md.getAllergies()));
+                        break;
+                    }
+                }
+            }
+        }
+        return Info;
     }
 
     public List<String> phoneAlert(String fireStation) {
@@ -50,5 +76,37 @@ public class FireStationService {
             }
         }
         return phones;
+    }
+
+    public List<String> stationNumber(String stationNumber) {
+        List<String> Info = new ArrayList<>();
+        List<Person> persons = personRepository.findAllPersons();
+        List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
+        List<FireStation> fireStations = fireStationRepository.getFireStation();
+        int adults = 0;
+        int children = 0;
+        for (FireStation fs : fireStations) {
+            for (Person person : persons) {
+                for (MedicalRecord md : medicalRecords){
+                    if (fs.getStation().equals(stationNumber) && fs.getAddress().equals(person.getAddress()) && person.getFirstName().equals(md.getFirstName()) && person.getLastName().equals(md.getLastName())) {
+                        Info.add(person.getFirstName() + " " + person.getLastName() + " " + person.getAddress() + " " + person.getPhone());
+
+                        LocalDate currentDate = LocalDate.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                        LocalDate birthDate = LocalDate.parse(md.getBirthdate(), formatter);
+                        Period period = Period.between(birthDate, currentDate);
+                        int age = period.getYears();
+                        if (age >= 18){
+                            adults+=1;
+                        } else {
+                            children+=1;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        Info.add("Nombre d'adults: " +  adults + " Nombre d'enfants: " +  children);
+        return Info;
     }
 }

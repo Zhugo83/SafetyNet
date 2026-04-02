@@ -29,13 +29,18 @@ public class FireStationControler {
         return fireStationService.deleteFireStation(fireStation);
     }*/
 
-    /*@GetMapping("fire")
-    public FireStations fire(@RequestParam(name = "address") String fireStation){
+    @GetMapping("fire")
+    public List<String> fire(@RequestParam(name = "address") String fireStation){
         return fireStationService.fire(fireStation);
-    }*/
+    }
 
     @GetMapping("phoneAlert")
     public List<String> phoneAlert(@RequestParam(name = "firestation_number") String fireStation){
         return fireStationService.phoneAlert(fireStation);
+    }
+
+    @GetMapping("firestation")
+    public List<String> firestation(@RequestParam(name = "station_number") String station_number){
+        return fireStationService.stationNumber(station_number);
     }
 }

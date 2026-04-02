@@ -32,4 +32,14 @@ public class PersonControler {
     public List<String> communityEmail(@RequestParam(name = "city") String city){
         return personService.communityEmail(city);
     }
+
+    @GetMapping("childAlert")
+    public List<String> childAlert(@RequestParam(name = "address") String address){
+        return personService.childAlert(address);
+    }
+
+    /*@GetMapping("personInfo")
+    public List<String> personInfo(@RequestParam(name = "firstName", value = "lastName") String info){
+        return personService.personInfo(info);
+    }*/
 }
