@@ -1,6 +1,7 @@
 package com.example.SafetyNet.controler;
 
 import com.example.SafetyNet.service.PersonService;
+import com.example.SafetyNet.service.dto.personInfoDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,8 +39,8 @@ public class PersonControler {
         return personService.childAlert(address);
     }
 
-    /*@GetMapping("personInfo")
-    public List<String> personInfo(@RequestParam(name = "firstName", value = "lastName") String info){
-        return personService.personInfo(info);
-    }*/
+    @GetMapping("personInfo")
+    public List<personInfoDto> personInfo(@RequestParam(name = "firstName") String name, @RequestParam(name = "lastName") String lastname) {
+        return personService.personInfo(name, lastname);
+    }
 }

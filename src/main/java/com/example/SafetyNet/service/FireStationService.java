@@ -6,6 +6,7 @@ import com.example.SafetyNet.model.Person;
 import com.example.SafetyNet.repository.FireStationRepository;
 import com.example.SafetyNet.repository.MedicalRecordRepository;
 import com.example.SafetyNet.repository.PersonRepository;
+import com.example.SafetyNet.utils.Utils;
 import org.springframework.stereotype.Service;
 
 
@@ -49,11 +50,7 @@ public class FireStationService {
             for (Person person : persons) {
                 for (MedicalRecord md : medicalRecords){
                     if (fs.getAddress().equals(address) && fs.getAddress().equals(person.getAddress()) && person.getFirstName().equals(md.getFirstName()) && person.getLastName().equals(md.getLastName())) {
-                        LocalDate currentDate = LocalDate.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-                        LocalDate birthDate = LocalDate.parse(md.getBirthdate(), formatter);
-                        Period period = Period.between(birthDate, currentDate);
-                        int age = period.getYears();
+                        int age = Utils.birthdayToAge(md.getBirthdate());
 
                         Info.add("Fire Station: " + fs.getStation() + " " + person.getLastName() + " " + person.getPhone() + " " + age + " Medications: " + Arrays.toString(md.getMedications()) + " Allergies: " + Arrays.toString(md.getAllergies()));
                         break;
@@ -91,11 +88,7 @@ public class FireStationService {
                     if (fs.getStation().equals(stationNumber) && fs.getAddress().equals(person.getAddress()) && person.getFirstName().equals(md.getFirstName()) && person.getLastName().equals(md.getLastName())) {
                         Info.add(person.getFirstName() + " " + person.getLastName() + " " + person.getAddress() + " " + person.getPhone());
 
-                        LocalDate currentDate = LocalDate.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-                        LocalDate birthDate = LocalDate.parse(md.getBirthdate(), formatter);
-                        Period period = Period.between(birthDate, currentDate);
-                        int age = period.getYears();
+                        int age = Utils.birthdayToAge(md.getBirthdate());
                         if (age >= 18){
                             adults+=1;
                         } else {

@@ -1,0 +1,59 @@
+package com.example.SafetyNet.service.dto;
+
+public class personInfoDto {
+
+    String nom;
+    String address;
+    int age;
+    String email;
+    String[] medications;
+    String[] allergies;
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String[] getMedications() {
+        return medications;
+    }
+
+    public void setMedications(String[] medications) {
+        this.medications = medications;
+    }
+
+    public String[] getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String[] allergies) {
+        this.allergies = allergies;
+    }
+}
