@@ -2,11 +2,14 @@ package com.example.SafetyNet.controler;
 
 import com.example.SafetyNet.service.MedicalRecordService;
 import org.springframework.web.bind.annotation.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @RestController
 @RequestMapping("/medicalRecords")
 public class MedicalRecordControler {
 
+    private static final Logger logger = LogManager.getLogger(MedicalRecordControler.class);
     private final MedicalRecordService medicalRecordService;
 
     public MedicalRecordControler(MedicalRecordService medicalRecordService) {

@@ -6,6 +6,7 @@ import com.example.SafetyNet.model.Person;
 import com.example.SafetyNet.repository.FireStationRepository;
 import com.example.SafetyNet.repository.MedicalRecordRepository;
 import com.example.SafetyNet.repository.PersonRepository;
+import com.example.SafetyNet.service.dto.fireDto;
 import com.example.SafetyNet.utils.Utils;
 import org.springframework.stereotype.Service;
 
@@ -41,19 +42,24 @@ public class FireStationService {
         return null;
     }
 
-    public List<String> fire(String address) {
-        List<String> Info = new ArrayList<>();
+    public List<fireDto> fire(String address) {
+        List<fireDto> Info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
         List<FireStation> fireStations = fireStationRepository.getFireStation();
+        fireDto informations = new fireDto();
         for (FireStation fs : fireStations) {
             for (Person person : persons) {
                 for (MedicalRecord md : medicalRecords){
                     if (fs.getAddress().equals(address) && fs.getAddress().equals(person.getAddress()) && person.getFirstName().equals(md.getFirstName()) && person.getLastName().equals(md.getLastName())) {
-                        int age = Utils.birthdayToAge(md.getBirthdate());
+                        informations.setNumstation(fs.getStation());
+                        informations.setPhoneNumber(person.getPhone());
+                        informations.setLastName(person.getLastName());
+                        informations.setMedications(md.getMedications());
+                        informations.setAllergies(md.getAllergies());
+                        informations.setAge(Utils.birthdayToAge(md.getBirthdate()));
+                        Info.add(informations);
 
-                        Info.add("Fire Station: " + fs.getStation() + " " + person.getLastName() + " " + person.getPhone() + " " + age + " Medications: " + Arrays.toString(md.getMedications()) + " Allergies: " + Arrays.toString(md.getAllergies()));
-                        break;
                     }
                 }
             }
