@@ -15,9 +15,16 @@ public class DataHandler {
 
     private final Data data;
 
-    public DataHandler() throws IOException {
+    private static String FILE_PATH = "data.json";
 
-        String temp = getFromResource("data.json");
+    public DataHandler() throws IOException {
+        String temp = getFromResource(FILE_PATH);
+        this.data = JsonIterator.deserialize(temp, Data.class);
+    }
+
+    public DataHandler(String filepath) throws IOException {
+
+        String temp = getFromResource(filepath);
         //InputStream json = new ClassPathResource("data.json").getInputStream();
         //String temp = IOUtils.toString(json, StandardCharsets.UTF_8);
         this.data = JsonIterator.deserialize(temp, Data.class);
