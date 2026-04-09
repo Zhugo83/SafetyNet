@@ -43,5 +43,6 @@ public class DataHandler {
         String json = JsonStream.serialize(data);
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("data.json"), StandardCharsets.UTF_8));
         writer.write(json);
+        writer.close();
     }
 }

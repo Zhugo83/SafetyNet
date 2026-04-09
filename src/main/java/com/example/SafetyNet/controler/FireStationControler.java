@@ -3,6 +3,7 @@ import com.example.SafetyNet.SafetyNetApplication;
 import com.example.SafetyNet.model.FireStation;
 import com.example.SafetyNet.service.FireStationService;
 import com.example.SafetyNet.service.dto.fireDto;
+import com.example.SafetyNet.service.dto.firestationDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class FireStationControler {
     }
 
     @GetMapping("firestation")
-    public List<String> firestation(@RequestParam(name = "station_number") String station_number){
+    public List<firestationDto> firestation(@RequestParam(name = "station_number") String station_number){
         logger.info("Request sent for ```firestation```");
         return fireStationService.stationNumber(station_number);
     }

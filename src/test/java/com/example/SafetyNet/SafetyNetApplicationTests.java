@@ -63,7 +63,7 @@ class SafetyNetApplicationTests {
 
 	@Test
 	void verifyJsonData() throws IOException {
-		DataHandler dataHandler = new DataHandler("datatest.json");
+		DataHandler dataHandler = new DataHandler("src\\test\\java\\resources\\datatest.json");
 		System.out.println(dataHandler.getData().getMedicalRecord());
 		PersonRepository personRepository = new PersonRepository(dataHandler);
 		List<Person> persons = personRepository.findAllPersons();

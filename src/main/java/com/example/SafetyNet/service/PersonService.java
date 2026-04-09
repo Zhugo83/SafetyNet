@@ -57,10 +57,10 @@ public class PersonService {
         List<personInfoDto> Info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
-        personInfoDto thisPersonInfo = new personInfoDto();
         for (Person p : persons) {
             for (MedicalRecord md : medicalRecords) {
                 if (p.getFirstName().equals(name) && p.getLastName().equals(lastname) && p.getFirstName().equals(md.getFirstName()) && p.getLastName().equals(md.getLastName())) {
+                    personInfoDto thisPersonInfo = new personInfoDto();
                     thisPersonInfo.setNom(p.getLastName());
                     thisPersonInfo.setAge(Utils.birthdayToAge(md.getBirthdate()));
                     thisPersonInfo.setAddress(p.getAddress());
@@ -80,24 +80,18 @@ public class PersonService {
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
         List<String> familyMembers = new ArrayList<>();
-        boolean hasChild = false;
-
         for (Person p : persons) {
             for (MedicalRecord md : medicalRecords) {
                 if (p.getAddress().equals(address) && p.getFirstName().equals(md.getFirstName()) && p.getLastName().equals(md.getLastName())) {
                     childAlertDto child = new childAlertDto();
                     int age = Utils.birthdayToAge(md.getBirthdate());
-                    if (age <= 18) {
+                    if (age >= 18) {
+                        familyMembers.add(p.getFirstName() + " " + p.getLastName());
+                    } else {
                         child.setName(p.getFirstName());
                         child.setLastName(p.getLastName());
                         child.setAge(age);
-                        hasChild = true;
-                    } else {
-                        familyMembers.add(p.getFirstName() + " " + p.getLastName());
                         child.setFamilyMembers(familyMembers);
-                    }
-                    if (hasChild) {
-                        hasChild = false;
                         Info.add(child);
                     }
                 }
@@ -112,25 +106,22 @@ public class PersonService {
         List<floodDto> Info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
-        List<FireStation> fireStations = fireStationRepository.getFireStation();
-        floodDto person = new floodDto();
+        List<FireStation> fireStations = fireStationRepository.findAllStations();
         for (FireStation f : fireStations) {
-            if (f.getStation().equals(stations)) {
-                for (Person p : persons) {
-                    for (MedicalRecord md : medicalRecords) {
-                        if (p.getAddress().equals(f.getAddress()) && p.getFirstName().equals(md.getFirstName()) && p.getLastName().equals(md.getLastName())) {
-                            int age = Utils.birthdayToAge(md.getBirthdate());
-                            person.setName(p.getLastName());
-                            person.setPhoneNumber(p.getPhone());
-                            person.setAge(age);
-                            person.setMedications(md.getMedications());
-                            person.setAllergies(md.getAllergies());
-                            Info.add(person);
-                        }
+            for (Person p : persons) {
+                for (MedicalRecord md : medicalRecords) {
+                    if (f.getStation().equals(stations) && p.getAddress().equals(f.getAddress()) && p.getFirstName().equals(md.getFirstName()) && p.getLastName().equals(md.getLastName())) {
+                        floodDto person = new floodDto();
+                        int age = Utils.birthdayToAge(md.getBirthdate());
+                        person.setName(p.getLastName());
+                        person.setPhoneNumber(p.getPhone());
+                        person.setAge(age);
+                        person.setMedications(md.getMedications());
+                        person.setAllergies(md.getAllergies());
+                        Info.add(person);
                     }
                 }
             }
-
         }
         return Info;
     }

@@ -7,16 +7,13 @@ import com.example.SafetyNet.repository.FireStationRepository;
 import com.example.SafetyNet.repository.MedicalRecordRepository;
 import com.example.SafetyNet.repository.PersonRepository;
 import com.example.SafetyNet.service.dto.fireDto;
+import com.example.SafetyNet.service.dto.firestationDto;
 import com.example.SafetyNet.utils.Utils;
 import org.springframework.stereotype.Service;
 
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.time.LocalDate;
-import java.time.Period;
 
 @Service
 public class FireStationService {
@@ -46,19 +43,19 @@ public class FireStationService {
         List<fireDto> Info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
-        List<FireStation> fireStations = fireStationRepository.getFireStation();
-        fireDto informations = new fireDto();
+        List<FireStation> fireStations = fireStationRepository.findAllStations();
         for (FireStation fs : fireStations) {
             for (Person person : persons) {
                 for (MedicalRecord md : medicalRecords){
                     if (fs.getAddress().equals(address) && fs.getAddress().equals(person.getAddress()) && person.getFirstName().equals(md.getFirstName()) && person.getLastName().equals(md.getLastName())) {
-                        informations.setNumstation(fs.getStation());
-                        informations.setPhoneNumber(person.getPhone());
-                        informations.setLastName(person.getLastName());
-                        informations.setMedications(md.getMedications());
-                        informations.setAllergies(md.getAllergies());
-                        informations.setAge(Utils.birthdayToAge(md.getBirthdate()));
-                        Info.add(informations);
+                        fireDto information = new fireDto();
+                        information.setNumstation(fs.getStation());
+                        information.setPhoneNumber(person.getPhone());
+                        information.setLastName(person.getLastName());
+                        information.setMedications(md.getMedications());
+                        information.setAllergies(md.getAllergies());
+                        information.setAge(Utils.birthdayToAge(md.getBirthdate()));
+                        Info.add(information);
 
                     }
                 }
@@ -70,7 +67,7 @@ public class FireStationService {
     public List<String> phoneAlert(String fireStation) {
         List<String> phones = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
-        List<FireStation> fireStations = fireStationRepository.getFireStation();
+        List<FireStation> fireStations = fireStationRepository.findAllStations();
         for (FireStation fs : fireStations) {
             for (Person person : persons) {
                 if (fs.getStation().equals(fireStation) && fs.getAddress().equals(person.getAddress())) {
@@ -81,31 +78,34 @@ public class FireStationService {
         return phones;
     }
 
-    public List<String> stationNumber(String stationNumber) {
-        List<String> Info = new ArrayList<>();
+    public List<firestationDto> stationNumber(String stationNumber) {
+        List<firestationDto> Info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
-        List<FireStation> fireStations = fireStationRepository.getFireStation();
+        List<FireStation> fireStations = fireStationRepository.findAllStations();
         int adults = 0;
         int children = 0;
         for (FireStation fs : fireStations) {
             for (Person person : persons) {
                 for (MedicalRecord md : medicalRecords){
                     if (fs.getStation().equals(stationNumber) && fs.getAddress().equals(person.getAddress()) && person.getFirstName().equals(md.getFirstName()) && person.getLastName().equals(md.getLastName())) {
-                        Info.add(person.getFirstName() + " " + person.getLastName() + " " + person.getAddress() + " " + person.getPhone());
-
+                        firestationDto individual = new firestationDto();
+                        individual.setName(person.getFirstName());
+                        individual.setLastName(person.getLastName());
+                        individual.setPhone(person.getPhone());
+                        individual.setAddress(person.getAddress());
+                        individual.setAge(Utils.birthdayToAge(md.getBirthdate()));
                         int age = Utils.birthdayToAge(md.getBirthdate());
                         if (age >= 18){
                             adults+=1;
                         } else {
                             children+=1;
                         }
-                        break;
+                        Info.add(individual);
                     }
                 }
             }
         }
-        Info.add("Nombre d'adults: " +  adults + " Nombre d'enfants: " +  children);
         return Info;
     }
 }
