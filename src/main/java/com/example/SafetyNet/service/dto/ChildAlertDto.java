@@ -2,7 +2,12 @@ package com.example.SafetyNet.service.dto;
 
 import java.util.List;
 
-public class childAlertDto {
+public class ChildAlertDto {
+
+    String name;
+    String lastName;
+    int age;
+    List<String> familyMembers;
 
     public String getName() {
         return name;
@@ -35,10 +40,5 @@ public class childAlertDto {
     public void setFamilyMembers(List<String> familyMembers) {
         this.familyMembers = familyMembers;
     }
-
-    String name;
-    String lastName;
-    int age;
-    List<String> familyMembers;
 
 }

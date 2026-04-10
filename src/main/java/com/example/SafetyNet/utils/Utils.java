@@ -10,7 +10,6 @@ public class Utils {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate birthDate = LocalDate.parse(birthdate, formatter);
-        Period period = Period.between(birthDate, currentDate);
-        return period.getYears();
+        return Period.between(birthDate, currentDate).getYears();
     }
 }

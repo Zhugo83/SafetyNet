@@ -1,6 +1,6 @@
 package com.example.SafetyNet.service.dto;
 
-public class firestationDto {
+public class FirestationDto {
 
     String lastName;
 

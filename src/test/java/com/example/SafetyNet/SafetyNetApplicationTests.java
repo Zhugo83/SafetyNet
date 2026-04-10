@@ -8,14 +8,12 @@ import com.example.SafetyNet.repository.FireStationRepository;
 import com.example.SafetyNet.repository.MedicalRecordRepository;
 import com.example.SafetyNet.repository.PersonRepository;
 import com.jsoniter.output.JsonStream;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -29,7 +27,7 @@ class SafetyNetApplicationTests {
 	private static final Logger logger = LogManager.getLogger(SafetyNetApplicationTests.class);
 
 	@BeforeAll
-	static void setup() throws IOException {
+	static void setup() throws IOException, InterruptedException {
 		HashMap<String, Object> json = new HashMap<>();
 		List<Person> persons = new ArrayList<>();
 		List<FireStation> firestations = new ArrayList<>();
@@ -48,12 +46,14 @@ class SafetyNetApplicationTests {
 		medicalrecords.add(medicalRecord);
 		json.put("medicalrecords", List.of(medicalRecord));
 
-		System.out.println(json);
 		String data = JsonStream.serialize(json);
-		System.out.println(data);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src\\test\\java\\resources\\datatest.json"), StandardCharsets.UTF_8));
-		writer.write(data);
-		writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src\\main\\resources\\datatest.json"), StandardCharsets.UTF_8))) {
+            writer.write(data);
+			writer.flush();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+		// Test will fail when creating this as it try to use it before the program actually create it, which it only does when the program is closed.
 	}
 
 	@Test
@@ -61,9 +61,20 @@ class SafetyNetApplicationTests {
 
 	}
 
+	//@AfterAll
+	static void tearDown() throws IOException {
+		File myObj = new File("src\\main\\resources\\datatest.json");
+		if (myObj.delete()) {
+			System.out.println("Deleted the file: " + myObj.getName());
+		} else {
+			System.out.println("Failed to delete the file.");
+		}
+	}
+	// Do not remove the file, as it will not be found when created within the test
+
 	@Test
 	void verifyJsonData() throws IOException {
-		DataHandler dataHandler = new DataHandler("src\\test\\java\\resources\\datatest.json");
+		DataHandler dataHandler = new DataHandler("datatest.json");
 		System.out.println(dataHandler.getData().getMedicalRecord());
 		PersonRepository personRepository = new PersonRepository(dataHandler);
 		List<Person> persons = personRepository.findAllPersons();
@@ -72,7 +83,7 @@ class SafetyNetApplicationTests {
 				assertEquals("John", p.getFirstName());
 			}
 		}
-
 	}
+
 
 }

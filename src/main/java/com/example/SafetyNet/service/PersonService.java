@@ -6,9 +6,9 @@ import com.example.SafetyNet.model.Person;
 import com.example.SafetyNet.repository.FireStationRepository;
 import com.example.SafetyNet.repository.MedicalRecordRepository;
 import com.example.SafetyNet.repository.PersonRepository;
-import com.example.SafetyNet.service.dto.childAlertDto;
-import com.example.SafetyNet.service.dto.floodDto;
-import com.example.SafetyNet.service.dto.personInfoDto;
+import com.example.SafetyNet.service.dto.ChildAlertDto;
+import com.example.SafetyNet.service.dto.FloodDto;
+import com.example.SafetyNet.service.dto.PersonInfoDto;
 import com.example.SafetyNet.utils.Utils;
 import org.springframework.stereotype.Service;
 
@@ -53,14 +53,14 @@ public class PersonService {
     }
 
 
-    public List<personInfoDto> personInfo(String name, String lastname) {
-        List<personInfoDto> Info = new ArrayList<>();
+    public List<PersonInfoDto> personInfo(String name, String lastname) {
+        List<PersonInfoDto> Info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
         for (Person p : persons) {
             for (MedicalRecord md : medicalRecords) {
                 if (p.getFirstName().equals(name) && p.getLastName().equals(lastname) && p.getFirstName().equals(md.getFirstName()) && p.getLastName().equals(md.getLastName())) {
-                    personInfoDto thisPersonInfo = new personInfoDto();
+                    PersonInfoDto thisPersonInfo = new PersonInfoDto();
                     thisPersonInfo.setNom(p.getLastName());
                     thisPersonInfo.setAge(Utils.birthdayToAge(md.getBirthdate()));
                     thisPersonInfo.setAddress(p.getAddress());
@@ -74,36 +74,36 @@ public class PersonService {
         return Info;
     }
 
-    public List<childAlertDto> childAlert(String address) {
+    public List<ChildAlertDto> childAlert(String address) {
 
-        List<childAlertDto> Info = new ArrayList<>();
+        List<ChildAlertDto> info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
         List<String> familyMembers = new ArrayList<>();
         for (Person p : persons) {
             for (MedicalRecord md : medicalRecords) {
                 if (p.getAddress().equals(address) && p.getFirstName().equals(md.getFirstName()) && p.getLastName().equals(md.getLastName())) {
-                    childAlertDto child = new childAlertDto();
+                    ChildAlertDto child = new ChildAlertDto();
                     int age = Utils.birthdayToAge(md.getBirthdate());
-                    if (age >= 18) {
-                        familyMembers.add(p.getFirstName() + " " + p.getLastName());
-                    } else {
+                    if (age <= 18) {
                         child.setName(p.getFirstName());
                         child.setLastName(p.getLastName());
                         child.setAge(age);
                         child.setFamilyMembers(familyMembers);
-                        Info.add(child);
+                        info.add(child);
+                    } else {
+                        familyMembers.add(p.getFirstName() + " " + p.getLastName());
                     }
                 }
             }
         }
-        return Info;
+        return info;
 
     }
 
-    public List<floodDto> flood(String stations) {
+    public List<FloodDto> flood(String stations) {
 
-        List<floodDto> Info = new ArrayList<>();
+        List<FloodDto> Info = new ArrayList<>();
         List<Person> persons = personRepository.findAllPersons();
         List<MedicalRecord> medicalRecords = medicalRecordRepository.findAllRecords();
         List<FireStation> fireStations = fireStationRepository.findAllStations();
@@ -111,7 +111,7 @@ public class PersonService {
             for (Person p : persons) {
                 for (MedicalRecord md : medicalRecords) {
                     if (f.getStation().equals(stations) && p.getAddress().equals(f.getAddress()) && p.getFirstName().equals(md.getFirstName()) && p.getLastName().equals(md.getLastName())) {
-                        floodDto person = new floodDto();
+                        FloodDto person = new FloodDto();
                         int age = Utils.birthdayToAge(md.getBirthdate());
                         person.setName(p.getLastName());
                         person.setPhoneNumber(p.getPhone());

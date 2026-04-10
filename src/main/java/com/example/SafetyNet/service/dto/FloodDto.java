@@ -1,6 +1,6 @@
 package com.example.SafetyNet.service.dto;
 
-public class floodDto {
+public class FloodDto {
 
     public String getName() {
         return name;
