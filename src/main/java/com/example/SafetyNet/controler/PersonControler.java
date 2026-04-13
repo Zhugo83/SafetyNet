@@ -15,7 +15,7 @@ public class PersonControler {
     private static final Logger logger = LogManager.getLogger(PersonControler.class);
     private final PersonService personService;
 
-    PersonControler(PersonService personService) {
+    public PersonControler(PersonService personService) {
         this.personService = personService;
     }
 

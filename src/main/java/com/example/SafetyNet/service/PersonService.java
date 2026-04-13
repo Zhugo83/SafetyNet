@@ -19,7 +19,6 @@ import java.util.List;
 public class PersonService {
 
     private final PersonRepository personRepository;
-    ;
     private final FireStationRepository fireStationRepository;
     private final MedicalRecordRepository medicalRecordRepository;
 
